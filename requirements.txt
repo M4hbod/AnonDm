@@ -1,0 +1,7 @@
+aiofiles
+motor
+pykeyboard
+pyroaddon
+pyrogram==1.*
+python-dotenv
+pyyaml
