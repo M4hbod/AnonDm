@@ -42,7 +42,7 @@ async def profile_message_handler(_, message, strings):
         )
     else:
         await message.reply_text(
-            caption=strings["profile"].format(
+            text=strings["profile"].format(
                 message.from_user.id,
                 self_random_id,
                 bot.username,
