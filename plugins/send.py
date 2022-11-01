@@ -1,6 +1,6 @@
 from config import OWNER_ID
 from core.database import mongo
-from core.decorators import language
+from core.decorators import is_user_started, language
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -24,6 +24,7 @@ def get_reply_button(self_random_id, strings):
 
 
 @Client.on_message(filters.regex("^/start ") & filters.private)
+@is_user_started
 @language
 async def start_send_handler(_, message, strings):
     action, random_id = message.text.split(" ")[1].split("_")
