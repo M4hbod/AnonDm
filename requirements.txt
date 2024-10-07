@@ -2,6 +2,6 @@ aiofiles
 motor
 pykeyboard
 pyroaddon
-pyrogram==1.*
+pyrogram
 python-dotenv
 pyyaml

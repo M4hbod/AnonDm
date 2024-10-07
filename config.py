@@ -1,5 +1,5 @@
 from os import getenv
-
+import urllib.parse
 from dotenv import load_dotenv
 
 load_dotenv()

@@ -1,21 +1,20 @@
 from core.database import mongo
 from core.decorators import language
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 
-@Client.on_message(
-    filters.regex("^(📁\|Profile|📁\|پروفایل)$") & filters.private
-)
+@Client.on_message(filters.regex(r"^(📁\|Profile|📁\|پروفایل)$") & filters.private)
 @language
-async def profile_message_handler(_, message, strings):
+async def profile_message_handler(client: Client, message: Message, strings):
     blocked = await mongo.get_blocked(message.from_user.id)
     self_random_id = await mongo.get_random_id(message.from_user.id)
-    bot = await _.get_me()
+    bot = await client.get_me()
     if message.from_user.photo:
-        res = await _.get_profile_photos(message.from_user.id, limit=1)
-        x = await message.reply_photo(
-            res[0].file_id,
+        async for photo in client.get_chat_photos(message.from_user.id, limit=1):
+            photo_file_id = photo.file_id
+        await message.reply_photo(
+            photo_file_id,
             caption=strings["profile"].format(
                 message.from_user.id,
                 self_random_id,
@@ -29,16 +28,16 @@ async def profile_message_handler(_, message, strings):
                 [
                     [
                         InlineKeyboardButton(
-                            text=strings["button_7"],
-                            callback_data="unblock_all"
+                            text=strings["button_7"], callback_data="unblock_all"
                         ),
                         InlineKeyboardButton(
-                            text=strings["button_8"],
-                            callback_data="get_all_blocked"
+                            text=strings["button_8"], callback_data="get_all_blocked"
                         ),
                     ]
                 ]
-            ) if blocked else None,
+            )
+            if blocked
+            else None,
         )
     else:
         await message.reply_text(
@@ -55,14 +54,14 @@ async def profile_message_handler(_, message, strings):
                 [
                     [
                         InlineKeyboardButton(
-                            text=strings["button_7"],
-                            callback_data="unblock_all"
+                            text=strings["button_7"], callback_data="unblock_all"
                         ),
                         InlineKeyboardButton(
-                            text=strings["button_8"],
-                            callback_data="get_all_blocked"
+                            text=strings["button_8"], callback_data="get_all_blocked"
                         ),
                     ]
                 ]
-            ) if blocked else None,
+            )
+            if blocked
+            else None,
         )

@@ -1,12 +1,12 @@
-from core.decorators import is_user_started, language
+from core.decorators import has_user_started, language
 from pyrogram import Client, filters
-from pyrogram.types import KeyboardButton, ReplyKeyboardMarkup
+from pyrogram.types import KeyboardButton, ReplyKeyboardMarkup, Message
 
 
-@Client.on_message(filters.regex("^/start$") & filters.private)
-@is_user_started
+@Client.on_message(filters.command("start") & filters.private)
+@has_user_started
 @language
-async def start(_, message, strings):
+async def start(client: Client, message: Message, strings):
     await message.reply_text(
         strings["start_1"].format(message.from_user.mention),
         reply_markup=ReplyKeyboardMarkup(

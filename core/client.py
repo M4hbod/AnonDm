@@ -3,11 +3,11 @@ from config import API_HASH, API_ID, BOT_TOKEN
 from pyrogram import Client
 
 bot = Client(
-    ":memory:",
+    "anondm",
     API_ID,
     API_HASH,
     bot_token=BOT_TOKEN,
-    plugins=dict(root="plugins")
+    plugins=dict(root="plugins"),
 )
 
 with bot:

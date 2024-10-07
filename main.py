@@ -2,12 +2,12 @@ import asyncio
 
 from pyrogram import idle
 
-from core.client import bot
+from core.client import BOT_USERNAME, bot
 
 
 async def main():
     await bot.start()
-    print(">> BOT STARTED")
+    print(f">> BOT STARTED @{BOT_USERNAME}")
     await idle()
 
 
